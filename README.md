@@ -8,7 +8,7 @@ Heavy Twig extensions (lots of constructor dependencies) get instantiated on eve
 
 - PHP 8.1+
 - Symfony 5.4+
-- Twig 3+
+- Twig 2.13+ or 3+
 
 ## Installation
 
