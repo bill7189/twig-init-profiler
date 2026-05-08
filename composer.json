@@ -1,0 +1,39 @@
+{
+    "name": "bill7189/twig-init-profiler",
+    "description": "Symfony profiler panel and CLI command that measure per-extension Twig instantiation time, useful for spotting heavy extensions that should migrate to TwigRuntime.",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "keywords": [
+        "symfony",
+        "twig",
+        "profiler",
+        "performance",
+        "twig-extension",
+        "twig-runtime",
+        "data-collector"
+    ],
+    "authors": [
+        {
+            "name": "Bill Lo",
+            "email": "bill.lo@101medialab.com",
+            "homepage": "https://github.com/bill7189"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "symfony/config": "^5.4",
+        "symfony/console": "^5.4",
+        "symfony/dependency-injection": "^5.4",
+        "symfony/framework-bundle": "^5.4",
+        "symfony/http-foundation": "^5.4",
+        "symfony/http-kernel": "^5.4",
+        "symfony/twig-bundle": "^5.4",
+        "twig/twig": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bill7189\\TwigInitProfiler\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

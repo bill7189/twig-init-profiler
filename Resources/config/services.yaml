@@ -1,0 +1,22 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Bill7189\TwigInitProfiler\Profiler\TwigExtensionProfiler:
+        public: true
+
+    Bill7189\TwigInitProfiler\Profiler\TwigExtensionDataCollector:
+        arguments:
+            - '@Bill7189\TwigInitProfiler\Profiler\TwigExtensionProfiler'
+        tags:
+            - { name: data_collector, template: '@Bill7189TwigInitProfiler/Profiler/twig_extensions.html.twig', id: 'bill7189_twig_init_profiler' }
+
+    Bill7189\TwigInitProfiler\Command\BenchmarkTwigExtensionsCommand:
+        arguments:
+            $twig: '@twig'
+            $excludedClasses: '%bill7189_twig_init_profiler.excluded_classes%'
+            $excludedPrefixes: '%bill7189_twig_init_profiler.excluded_prefixes%'
+        tags:
+            - { name: console.command }

@@ -1,0 +1,75 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        {{ include('@WebProfiler/Icon/twig.svg') }}
+        <span class="sf-toolbar-value">{{ '%.1f'|format(collector.totalMs) }} ms</span>
+    {% endset %}
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Twig Ext Init</b>
+            <span>{{ '%.1f'|format(collector.totalMs) }} ms ({{ collector.count }} extensions)</span>
+        </div>
+    {% endset %}
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: profiler_url }) }}
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon">{{ include('@WebProfiler/Icon/twig.svg') }}</span>
+        <strong>Twig Ext</strong>
+        <span class="count">
+            <span>{{ '%.1f'|format(collector.totalMs) }} ms</span>
+        </span>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Twig Extension Instantiation</h2>
+
+    <div class="metrics">
+        <div class="metric">
+            <span class="value">{{ '%.1f'|format(collector.totalMs) }} <span class="unit">ms</span></span>
+            <span class="label">Total Init Time</span>
+        </div>
+        <div class="metric">
+            <span class="value">{{ collector.count }}</span>
+            <span class="label">Extensions Profiled</span>
+        </div>
+    </div>
+
+    <h3>Per-Extension Timing</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Extension</th>
+                <th>Init Time</th>
+                <th>% of Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for name, ms in collector.extensions %}
+                <tr>
+                    <td>{{ name }}</td>
+                    <td>{{ '%.3f'|format(ms) }} ms</td>
+                    <td>{{ collector.totalMs > 0 ? '%.1f'|format(ms / collector.totalMs * 100) : '0' }}%</td>
+                    <td>
+                        {% if ms > 10 %}
+                            <span class="label status-error">SLOW</span>
+                        {% elseif ms > 1 %}
+                            <span class="label status-warning">MODERATE</span>
+                        {% else %}
+                            <span class="label status-success">OK</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="help">
+        Extensions marked <strong>SLOW</strong> (&gt;10ms) are top candidates for TwigRuntime migration.
+        After migration, their init time should drop to ~0ms since runtimes are lazy-loaded.
+    </p>
+{% endblock %}
