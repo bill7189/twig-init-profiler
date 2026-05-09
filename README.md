@@ -46,6 +46,18 @@ bill7189_twig_init_profiler:
 
 Both default to empty. Both filters apply to the profiler panel **and** the benchmark command.
 
+## Profiler Panel
+
+Once installed, a **Twig Ext** panel appears in the Symfony Web Profiler toolbar showing the total instantiation time across all profiled extensions. Click into the panel to see a per-extension breakdown:
+
+| Column     | Description                                           |
+|------------|-------------------------------------------------------|
+| Extension  | FQCN of the Twig extension                            |
+| Init Time  | How long `hrtime()` measured for that single `new`    |
+| % of Total | Share of the combined init budget this extension uses |
+
+Extensions are sorted slowest-first, so the biggest wins are at the top.
+
 ## CLI Benchmark
 
 The bundle also ships a console command that statically analyses each extension and reports on its constructor dependency count, plus how many filters/functions/tests are inline vs runtime-delegated:
@@ -57,13 +69,13 @@ bin/console twig-init-profiler:benchmark
 Sample output:
 
 ```
- ----------------- ------ -------- --------- ----------
-  Extension         Deps   Inline   Runtime   Status
- ----------------- ------ -------- --------- ----------
-  ProductExtension     5        7         0   MIGRATE
-  CatalogExtension     3        4         0   MIGRATE
-  HelperExtension      0        2         0   OK
- ----------------- ------ -------- --------- ----------
+ ------------------------------------------ ------ -------- --------- ----------
+  Extension                                  Deps   Inline   Runtime   Status
+ ------------------------------------------ ------ -------- --------- ----------
+  App\Twig\Extension\ProductExtension           5        7         0   MIGRATE
+  App\Twig\Extension\CatalogExtension           3        4         0   MIGRATE
+  App\Twig\Extension\HelperExtension            0        2         0   OK
+ ------------------------------------------ ------ -------- --------- ----------
 ```
 
 `MIGRATE` flags extensions that have constructor dependencies but still register inline callables — those are the highest-impact candidates for `TwigRuntime`.
