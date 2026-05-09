@@ -54,8 +54,8 @@ class BenchmarkTwigExtensionsCommand extends Command
 
             [$inline, $runtime] = $this->countMethods($extension);
 
-            $status = $paramCount > 0
-                ? ($inline > 0 ? '<fg=red>MIGRATE</>' : '<fg=yellow>HAS DEPS</>')
+            $status = ($paramCount > 0 && $inline > 0)
+                ? '<fg=red>MIGRATE</>'
                 : '<fg=green>OK</>';
 
             $rows[] = [
