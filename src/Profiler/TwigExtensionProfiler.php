@@ -13,12 +13,11 @@ class TwigExtensionProfiler
 
     public function profile(\Closure $factory, string $class): AbstractExtension
     {
-        $shortName = substr(strrchr($class, '\\') ?: $class, 1);
         $start = hrtime(true);
         $extension = $factory();
         $durationMs = (hrtime(true) - $start) / 1_000_000;
 
-        $this->results[$shortName] = $durationMs;
+        $this->results[$class] = $durationMs;
 
         return $extension;
     }

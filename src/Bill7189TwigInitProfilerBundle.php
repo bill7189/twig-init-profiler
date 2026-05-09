@@ -10,6 +10,11 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class Bill7189TwigInitProfilerBundle extends Bundle
 {
+    public function getPath(): string
+    {
+        return \dirname(__DIR__);
+    }
+
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);

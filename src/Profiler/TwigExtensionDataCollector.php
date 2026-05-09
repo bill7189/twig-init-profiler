@@ -29,6 +29,11 @@ class TwigExtensionDataCollector extends AbstractDataCollector
         ];
     }
 
+    public function getName(): string
+    {
+        return 'bill7189_twig_init_profiler';
+    }
+
     public static function getTemplate(): ?string
     {
         return '@Bill7189TwigInitProfiler/Profiler/twig_extensions.html.twig';
