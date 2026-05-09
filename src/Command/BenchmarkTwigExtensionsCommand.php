@@ -59,7 +59,7 @@ class BenchmarkTwigExtensionsCommand extends Command
                 : '<fg=green>OK</>';
 
             $rows[] = [
-                $reflection->getShortName(),
+                $class,
                 (string) $paramCount,
                 (string) $inline,
                 (string) $runtime,
